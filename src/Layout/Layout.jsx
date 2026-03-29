@@ -1,13 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 function Layout() {
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header />
-      <main>
-        <Outlet />
+      <main className="pt-16">
+        <div className="flex min-h-[calc(100vh-64px)]">
+          <aside>
+            <Sidebar />
+          </aside>
+          <section className="w-full md:w-[95%] p-4">
+            <Outlet />
+          </section>
+        </div>
       </main>
     </div>
   );
