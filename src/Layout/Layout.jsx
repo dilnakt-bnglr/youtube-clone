@@ -8,7 +8,7 @@ function Layout() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header />
       <main className="pt-16">
-        <div className="flex min-h-[calc(100vh-64px)]">
+        <div className="hidden sm:flex min-h-[calc(100vh-64px)]">
           <aside>
             <Sidebar />
           </aside>

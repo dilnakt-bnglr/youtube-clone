@@ -19,11 +19,11 @@ function Header() {
           <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
         </div>
 
-        <div className="flex-1 px-3">
+        <div className="flex-1 px-3 flex items-center justify-center">
           <input
             type="text"
             placeholder="Search"
-            className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-[50%] border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
 
@@ -57,13 +57,12 @@ function Header() {
           <div className="flex justify-end p-4">
             <button
               onClick={() => setIsOpen(false)}
-              className="text-2xl font-bold"
-              aria-label="Close menu"
+              className="text-2xl font-bold cursor-pointer"
             >
               ×
             </button>
           </div>
-          <Flyout />
+          <Flyout setIsOpen={setIsOpen} />
         </aside>
       </div>
     </>
