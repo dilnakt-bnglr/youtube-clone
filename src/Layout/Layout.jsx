@@ -8,11 +8,11 @@ function Layout() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header />
       <main className="pt-16">
-        <div className="hidden sm:flex min-h-[calc(100vh-64px)]">
-          <aside>
+        <div className="flex min-h-[calc(100vh-64px)]">
+          <aside className="hidden sm:flex">
             <Sidebar />
           </aside>
-          <section className="w-full md:w-[95%] p-4">
+          <section className="w-full">
             <Outlet />
           </section>
         </div>

@@ -8,6 +8,7 @@ import { youtube_icon } from "../assets/home_icon.js";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoMusicalNoteOutline } from "react-icons/io5";
 import { ImFilm } from "react-icons/im";
+import { GrHistory } from "react-icons/gr";
 
 function Flyout({ setIsOpen }) {
   return (
@@ -36,6 +37,10 @@ function Flyout({ setIsOpen }) {
           <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
             <VscAccount className="text-3xl" />
             <span>You</span>
+          </div>
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+            <GrHistory className="text-3xl" />
+            <span>History</span>
           </div>
         </div>
         <hr />

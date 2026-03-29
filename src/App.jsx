@@ -1,7 +1,12 @@
 import React from "react";
+import VideoList from "./Components/Videos/VideoList";
 
 function App() {
-  return <div className="text-red-500"></div>;
+  return (
+    <div>
+      <VideoList />
+    </div>
+  );
 }
 
 export default App;

@@ -4,6 +4,7 @@ import { youtube_icon } from "../assets/home_icon.js";
 import { FiBell, FiPlus } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import Flyout from "./Flyout.jsx";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,9 +33,11 @@ function Header() {
             <FiPlus /> Create
           </button>
           <FiBell className="text-2xl" />
-          <button className="flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800">
-            <VscAccount className="text-2xl" /> Sign in
-          </button>
+          <Link to="/signin">
+            <button className="flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800 cursor-pointer">
+              <VscAccount className="text-2xl" /> Sign in
+            </button>
+          </Link>
         </div>
       </header>
       <div
