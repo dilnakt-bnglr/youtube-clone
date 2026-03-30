@@ -4,6 +4,7 @@ import App from "../App.jsx";
 import SignIn from "../Pages/SignIn.jsx";
 import SignUp from "../Pages/SignUp.jsx";
 import VideoDetails from "../Pages/VideoDetails.jsx";
+import Channel from "../Pages/Channel.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/video/:id",
         element: <VideoDetails />,
+      },
+      {
+        path: "/channel/:id",
+        element: <Channel />,
       },
     ],
   },
