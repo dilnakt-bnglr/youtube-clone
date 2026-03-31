@@ -50,7 +50,7 @@ function Channel() {
         </div>
       </div>
       <Modal show={showModal} onClose={handleClose}>
-        <div className="flex flex-col items-center justify-center gap-4 ml-20 p-10">
+        <div className="m:0 flex flex-col items-center justify-center gap-4 sm:ml-20 p-10">
           <h2 className="text-2xl font-bold mb-8">Upload Your Video</h2>
           <input
             type="text"
@@ -72,7 +72,7 @@ function Channel() {
             className="w-[80%] border-1 p-2 rounded-lg"
           ></textarea>
         </div>
-        <div className="flex justify-end gap-4 w-full">
+        <div className="flex justify-end gap-4 w-full mt-10">
           <button
             onClick={handleClose}
             className="text-gray-600 cursor-pointer"

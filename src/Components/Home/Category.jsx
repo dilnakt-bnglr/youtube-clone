@@ -11,7 +11,7 @@ function Category() {
     "Art",
   ];
   return (
-    <div className="flex items-center flex-wrap gap-4 overflow-x-auto scrollbar-hide px-4 py-2 bg-white">
+    <div className="m-5 flex items-center sm:flex-wrap gap-4 sm:m-0 overflow-x-auto scrollbar-hide px-4 py-2 bg-white ">
       {categories.map((category) => (
         <button
           key={category}
