@@ -6,50 +6,74 @@ import { VscAccount } from "react-icons/vsc";
 import Flyout from "./Flyout.jsx";
 import { Link } from "react-router-dom";
 import Modal from "../Components/Modal.jsx";
+import { TfiSearch } from "react-icons/tfi";
+import { IoArrowBack } from "react-icons/io5";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [mobileSearch, setMobileSearch] = useState(false);
 
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-30 flex justify-between pl-10 p-3 items-center bg-white shadow-sm dark:bg-gray-900">
-        <Link to="/">
-          <div className="flex gap-5 items-center">
-            <RxHamburgerMenu
-              className="text-2xl cursor-pointer"
-              onClick={() => setIsOpen(true)}
-            />
-            <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
-          </div>
-        </Link>
+      {!mobileSearch ? (
+        <header className="pl:0 fixed inset-x-0 top-0 z-30 flex justify-between sm:pl-10 p-3 items-center bg-white shadow-sm ">
+          <Link to="/">
+            <div className="flex gap-5 items-center">
+              <RxHamburgerMenu
+                className="text-2xl cursor-pointer"
+                onClick={() => setIsOpen(true)}
+              />
+              <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
+            </div>
+          </Link>
 
-        <div className="flex-1 px-3 flex items-center justify-center">
+          <div className="flex-1 px-3 flex items-center justify-center">
+            <input
+              type="text"
+              placeholder="Search"
+              className="hidden sm:block w-[50%] border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
+            />
+            <TfiSearch
+              className="text-2xl sm:hidden"
+              onClick={() => setMobileSearch(true)}
+            />
+          </div>
+
+          <div className="flex gap-4 items-center sm:mr-2">
+            <button
+              className="px-3 py-1 rounded-full bg-slate-200 flex items-center gap-1 cursor-pointer hover:bg-slate-300"
+              onClick={handleOpen}
+            >
+              <FiPlus /> Create
+            </button>
+            <FiBell className="hidden sm:block text-2xl " />
+            <Link to="/signin">
+              <button className=" hidden sm:flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800 cursor-pointer">
+                <VscAccount className=" text-2xl" /> Sign in
+              </button>
+              <button className="sm:hidden">
+                <VscAccount className=" text-2xl" />
+              </button>
+            </Link>
+          </div>
+        </header>
+      ) : (
+        <div className="pl-0 fixed inset-x-0 top-0 z-30 flex justify-between sm:pl-10 p-3 items-center bg-white shadow-sm ">
+          <IoArrowBack
+            className="text-2xl mr-2"
+            onClick={() => setMobileSearch(false)}
+          />
           <input
             type="text"
             placeholder="Search"
-            className="w-[50%] border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
-
-        <div className="flex gap-4 items-center mr-10">
-          <button
-            className="px-3 py-1 rounded-full bg-slate-200 flex items-center gap-1 cursor-pointer hover:bg-slate-300"
-            onClick={handleOpen}
-          >
-            <FiPlus /> Create
-          </button>
-          <FiBell className="text-2xl" />
-          <Link to="/signin">
-            <button className="flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800 cursor-pointer">
-              <VscAccount className="text-2xl" /> Sign in
-            </button>
-          </Link>
-        </div>
-      </header>
+      )}
       <div
         className={`fixed inset-0 z-40 transition-opacity duration-300 ${
           isOpen
