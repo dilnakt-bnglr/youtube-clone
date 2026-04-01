@@ -35,10 +35,11 @@ function SignUp() {
         }, 3000);
       })
       .catch((error) => {
-        const errorMsg = error?.response?.data?.message;
+        const errorMsg =
+          error?.response?.data?.message ||
+          "An error occurred during registration.";
         setError(errorMsg);
       });
-    // console.log(bodyObject);
   };
 
   return (
