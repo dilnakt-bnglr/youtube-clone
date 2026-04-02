@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../Store/userSlice.js";
 
 function SignIn() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
     const emptyInput = [];
@@ -25,7 +28,14 @@ function SignIn() {
     const bodyObject = { user, password };
     axios
       .post("http://localhost:5000/api/login", bodyObject)
-      .then((data) => {
+      .then((response) => {
+        const userDetails = {
+          user: response.data.user.name,
+          token: response.data.token,
+        };
+        localStorage.setItem("userName", JSON.stringify(userDetails.user));
+        localStorage.setItem("token", JSON.stringify(userDetails.token));
+        dispatch(updateUser({ data: userDetails }));
         setTimeout(() => {
           navigate("/");
         }, 3000);

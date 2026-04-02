@@ -4,15 +4,30 @@ import { youtube_icon } from "../assets/home_icon.js";
 import { FiBell, FiPlus } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import Flyout from "./Flyout.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal.jsx";
 import { TfiSearch } from "react-icons/tfi";
 import { IoArrowBack } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../Store/userSlice.js";
 
 function Header() {
+  const userData =
+    useSelector((state) => state.user.userName) ||
+    JSON.parse(localStorage.getItem("userName"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
+  const [userMenuMobile, setUserMenuMobile] = useState(false);
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+    localStorage.clear();
+    navigate("/");
+  };
 
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -44,21 +59,109 @@ function Header() {
           </div>
 
           <div className="flex gap-4 items-center sm:mr-2">
-            <button
-              className="px-3 py-1 rounded-full bg-slate-200 flex items-center gap-1 cursor-pointer hover:bg-slate-300"
-              onClick={handleOpen}
-            >
-              <FiPlus /> Create
-            </button>
+            {userData && (
+              <button
+                className="px-3 py-1 rounded-full bg-slate-200 flex items-center gap-1 cursor-pointer hover:bg-slate-300"
+                onClick={handleOpen}
+              >
+                <FiPlus /> Create
+              </button>
+            )}
+
             <FiBell className="hidden sm:block text-2xl " />
-            <Link to="/signin">
-              <button className=" hidden sm:flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800 cursor-pointer">
-                <VscAccount className=" text-2xl" /> Sign in
-              </button>
-              <button className="sm:hidden">
-                <VscAccount className=" text-2xl" />
-              </button>
-            </Link>
+            {/* /* Desktop User Menu * / */}
+            {userData ? (
+              <div className="relative">
+                <span
+                  className="hidden sm:flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl cursor-pointer"
+                  onClick={() => setUserMenu(!userMenu)}
+                >
+                  {userData[0].toLowerCase()}
+                </span>
+                {userMenu && (
+                  <div className="hidden sm:block absolute right-8 top-10 w-[250px] bg-white border border-gray-300 rounded shadow-md z-10 p-4">
+                    <div className="flex gap-5 border-b-1 border-gray-300 pb-4 mb-4">
+                      <span
+                        className="hidden sm:flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl cursor-pointer"
+                        onClick={() => setUserMenu(!userMenu)}
+                      >
+                        {userData[0].toLowerCase()}
+                      </span>
+                      <div className="flex flex-col">
+                        <span>userData</span>
+                        <span>handleId</span>
+                        <Link to="/channel/:id">
+                          <span className="text-blue-600 hover:underline ">
+                            View your Channel
+                          </span>
+                        </Link>
+                      </div>
+                    </div>
+
+                    <button
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer"
+                      onClick={() => {
+                        setUserMenu(false);
+                        handleSignOut();
+                      }}
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/signin">
+                <button className=" hidden sm:flex items-center gap-2 border rounded-full px-3 py-1 text-blue-800 cursor-pointer">
+                  <VscAccount className=" text-2xl" /> Sign in
+                </button>
+              </Link>
+            )}
+            {/* Mobile User Menu */}
+            {userData ? (
+              <div className="relative">
+                <span
+                  onClick={() => setUserMenuMobile(!userMenuMobile)}
+                  className="sm:hidden w-10 h-10 rounded-full border flex  justify-center bg-blue-400 text-2xl cursor-pointer"
+                >
+                  {userData[0].toLowerCase()}
+                </span>
+                {userMenuMobile && (
+                  <div className="sm:hidden absolute right-8 top-10 w-[300px] bg-white border border-gray-300 rounded shadow-md z-10 p-4">
+                    <div className="flex gap-5 border-b-1 border-gray-300 pb-4 mb-4">
+                      <span className="flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl ">
+                        {userData[0].toLowerCase()}
+                      </span>
+                      <div className="flex flex-col">
+                        <span>userData</span>
+                        <span>handleId</span>
+                        <Link to="/channel/:id">
+                          <span className="text-blue-600 hover:underline">
+                            View your Channel
+                          </span>
+                        </Link>
+                      </div>
+                    </div>
+
+                    <button
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer"
+                      onClick={() => {
+                        setUserMenu(false);
+                        handleSignOut();
+                      }}
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/signin">
+                <button className="sm:hidden">
+                  <VscAccount className=" text-2xl" />
+                </button>
+              </Link>
+            )}
           </div>
         </header>
       ) : (
