@@ -10,6 +10,7 @@ import { TfiSearch } from "react-icons/tfi";
 import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../Store/userSlice.js";
+import axios from "axios";
 
 function Header() {
   const userData =
@@ -22,6 +23,42 @@ function Header() {
   const [mobileSearch, setMobileSearch] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [userMenuMobile, setUserMenuMobile] = useState(false);
+
+  // channel state
+  const [channelName, setChannelName] = useState("");
+  const [channelHandleId, setChannelHandleId] = useState("");
+  const [error, setError] = useState("");
+
+  const handleCreateChannel = () => {
+    const emptyInput = [];
+    if (!channelName) {
+      emptyInput.push("channelName");
+    }
+
+    if (!channelHandleId) {
+      emptyInput.push("channelHandleId");
+    }
+    if (emptyInput.length > 0) {
+      setError(`Required fields are missing: ${emptyInput.join(",")}`);
+      return;
+    }
+    const bodyObject = { channelName, channelHandleId };
+    const token = JSON.parse(localStorage.getItem("token"));
+    axios
+      .post("http://localhost:5000/api/channel", bodyObject, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${token}`,
+        },
+      })
+      .then((response) => {
+        setShowModal(false);
+        navigate(`/channel/${response?.data?.channelId}`);
+      })
+      .catch((err) => {
+        setError(err?.response?.data?.message);
+      });
+  };
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -212,15 +249,24 @@ function Header() {
           <p className="text-blue-600">Select Picture</p>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Channel Name"
             className="w-[80%] border-1 p-2 rounded-lg"
+            onChange={(e) => {
+              setChannelName(e.target.value);
+              setError("");
+            }}
           />
           <input
             type="text"
-            placeholder="Handle"
+            placeholder="Handle ID"
             className="w-[80%] border-1 p-2 rounded-lg"
+            onChange={(e) => {
+              setChannelHandleId(e.target.value);
+              setError("");
+            }}
           />
         </div>
+        {error && <p className="text-red-500 mb-5">{error}</p>}
         <div className="flex justify-end gap-4 ">
           <button
             onClick={handleClose}
@@ -229,7 +275,7 @@ function Header() {
             Cancel
           </button>
           <button
-            onClick={handleClose}
+            onClick={() => handleCreateChannel()}
             className="text-blue-600 cursor-pointer"
           >
             Create Channel

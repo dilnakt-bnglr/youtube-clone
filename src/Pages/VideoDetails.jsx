@@ -26,7 +26,12 @@ function VideoDetails() {
   return (
     <div className="block sm:flex">
       <div className="p-2 mt-5 sm:w-[60%]">
-        <img src={videoData?.video?.thumbnailURL} className="rounded-lg" />
+        <iframe
+          width={"100%"}
+          height={"30%"}
+          src="https://www.youtube.com/embed/4oRSpPaMnNE"
+          allowfullscreen
+        ></iframe>
         <div className="p-3">
           <h3 className="font-semibold text-xl font-roboto">
             {videoData?.video?.title}

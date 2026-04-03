@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function Channel() {
-  const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
