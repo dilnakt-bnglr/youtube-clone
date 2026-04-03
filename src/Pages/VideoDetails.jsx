@@ -1,26 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { PiShareFat } from "react-icons/pi";
 import Comment from "../Components/VideDetails/Comment";
 import VideodetailItem from "../Components/VideDetails/VideodetailItem";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function VideoDetails() {
   const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const videoId = useParams().id;
+  const [videoData, setVideoData] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/video/${videoId}`)
+      .then((response) => {
+        setVideoData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [videoId]);
   return (
     <div className="block sm:flex">
       <div className="p-2 mt-5 sm:w-[60%]">
-        <img
-          src="https://i.ytimg.com/vi/xQYJiKfKZ7g/maxresdefault.jpg"
-          className="rounded-lg"
-        />
+        <img src={videoData?.video?.thumbnailURL} className="rounded-lg" />
         <div className="p-3">
           <h3 className="font-semibold text-xl font-roboto">
-            Learn React In 30 Minutes
+            {videoData?.video?.title}
           </h3>
           <div className="flex justify-between gap-5">
             <div>
-              <h5 className="text-sm text-gray-600 ">Web Dev Simplified</h5>
+              <Link to={`/channel/${videoData?.channelDetails?._id}`}>
+                <h5 className="text-sm text-gray-600 ">
+                  {videoData?.channelDetails?.channelName}
+                </h5>
+              </Link>
+
               <p className="text-sm text-gray-500">1M views • 2 days ago</p>
             </div>
             <div className="flex gap-5">
@@ -41,17 +59,7 @@ function VideoDetails() {
           </div>
         </div>
         <div className="bg-gray-100 p-2 rounded-lg">
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p>{videoData?.video?.description}</p>
         </div>
         <Comment />
       </div>

@@ -4,12 +4,26 @@ import { FiPlus } from "react-icons/fi";
 import { useState } from "react";
 import Modal from "../Components/Modal";
 import { VscAccount } from "react-icons/vsc";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 function Channel() {
   const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [showModal, setShowModal] = useState(false);
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+  const [channelData, setChannelData] = useState("");
+  const channelId = useParams().id;
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/channel/${channelId}`)
+      .then((response) => {
+        setChannelData(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, [channelId]);
   return (
     <>
       <div className="p-4">
@@ -22,9 +36,12 @@ function Channel() {
         <div className="p-5 flex gap-5">
           <div className="w-32 h-32 rounded-full bg-indigo-500"></div>
           <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-semibold mt-3">Channel Name</h2>
+            <h2 className="text-2xl font-semibold mt-3">
+              {channelData?.channelDetails?.channelName}
+            </h2>
             <p className="text-sm text-gray-600">
-              @channel4624 . <span>1M subscribers .</span>
+              {channelData?.channelDetails?.channelHandleId} .{" "}
+              <span>1M subscribers .</span>
               <span> 100 videos</span>
             </p>
             <p>Welcome to official youtube channel!</p>
@@ -43,8 +60,8 @@ function Channel() {
         <div className=" gap-5 mb-5">
           <span>Videos</span>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 p-4">
-            {a.map((item) => (
-              <VideoItem key={item} channel={true} />
+            {channelData?.videos?.map((video) => (
+              <VideoItem key={video._id} video={video} channel={true} />
             ))}
           </div>
         </div>
