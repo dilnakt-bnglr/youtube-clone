@@ -1,12 +1,13 @@
 import React from "react";
 import VideoItem from "./VideoItem";
+import { useSelector } from "react-redux";
 
 function VideoList() {
-  const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const videos = useSelector((state) => state.video.videos);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 p-4">
-      {a.map(() => (
-        <VideoItem />
+      {videos.map((video) => (
+        <VideoItem key={video._id} video={video} />
       ))}
     </div>
   );

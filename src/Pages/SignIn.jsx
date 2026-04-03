@@ -29,6 +29,7 @@ function SignIn() {
     axios
       .post("http://localhost:5000/api/login", bodyObject)
       .then((response) => {
+        navigate("/");
         const userDetails = {
           user: response.data.user.name,
           token: response.data.token,
@@ -36,9 +37,6 @@ function SignIn() {
         localStorage.setItem("userName", JSON.stringify(userDetails.user));
         localStorage.setItem("token", JSON.stringify(userDetails.token));
         dispatch(updateUser({ data: userDetails }));
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
       })
       .catch((error) => {
         const errorMsg =
