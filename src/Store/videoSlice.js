@@ -22,8 +22,20 @@ const videoSlice = createSlice({
       });
       state.videos = filteredVideos;
     },
+    filterByCategories: (state, action) => {
+      const selectedCategory = action.payload;
+      if (selectedCategory == "All") {
+        state.videos = state.videoBackup;
+      } else {
+        const filteredVideosByCategory = state?.videoBackup?.filter(
+          (video) => video.category == selectedCategory,
+        );
+        state.videos = filteredVideosByCategory;
+      }
+    },
   },
 });
 
-export const { getVideo, filterVideos } = videoSlice.actions;
+export const { getVideo, filterVideos, filterByCategories } =
+  videoSlice.actions;
 export default videoSlice.reducer;
