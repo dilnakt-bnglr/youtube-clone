@@ -11,6 +11,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../Store/userSlice.js";
 import axios from "axios";
+import { filterVideos } from "../Store/videoSlice.js";
 
 function Header() {
   const userData =
@@ -66,6 +67,9 @@ function Header() {
     navigate("/");
   };
 
+  const handleInputChange = (value) => {
+    dispatch(filterVideos(value));
+  };
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
@@ -88,6 +92,7 @@ function Header() {
               type="text"
               placeholder="Search"
               className="hidden sm:block w-[50%] border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
+              onChange={(e) => handleInputChange(e.target.value)}
             />
             <TfiSearch
               className="text-2xl sm:hidden"

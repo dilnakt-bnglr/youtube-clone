@@ -29,7 +29,7 @@ function VideoDetails() {
         <iframe
           width={"100%"}
           height={"30%"}
-          src="https://www.youtube.com/embed/4oRSpPaMnNE"
+          src={videoData?.video?.videoURL}
           allowfullscreen
         ></iframe>
         <div className="p-3">
