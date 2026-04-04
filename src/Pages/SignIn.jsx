@@ -33,9 +33,11 @@ function SignIn() {
         const userDetails = {
           user: response.data.user.name,
           token: response.data.token,
+          id: response.data.user.userId,
         };
         localStorage.setItem("userName", JSON.stringify(userDetails.user));
         localStorage.setItem("token", JSON.stringify(userDetails.token));
+        localStorage.setItem("userId", JSON.stringify(userDetails.id));
         dispatch(updateUser({ data: userDetails }));
       })
       .catch((error) => {

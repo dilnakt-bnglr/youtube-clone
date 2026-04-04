@@ -5,6 +5,7 @@ import SignIn from "../Pages/SignIn.jsx";
 import SignUp from "../Pages/SignUp.jsx";
 import VideoDetails from "../Pages/VideoDetails.jsx";
 import Channel from "../Pages/Channel.jsx";
+import ChannelList from "../Pages/ChannelList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/channel/:id",
         element: <Channel />,
+      },
+      {
+        path: "/channel-list",
+        element: <ChannelList />,
       },
     ],
   },

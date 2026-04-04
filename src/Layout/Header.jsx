@@ -127,9 +127,9 @@ function Header() {
                       <div className="flex flex-col">
                         <span>userData</span>
                         <span>handleId</span>
-                        <Link to="/channel/:id">
+                        <Link to="/channel-list">
                           <span className="text-blue-600 hover:underline ">
-                            View your Channel
+                            View your Channels
                           </span>
                         </Link>
                       </div>
