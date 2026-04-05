@@ -12,12 +12,14 @@ function VideoDetails() {
   const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const videoId = useParams().id;
   const [videoData, setVideoData] = useState("");
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/video/${videoId}`)
       .then((response) => {
         setVideoData(response.data);
+        setComments(response.data.comments);
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +68,11 @@ function VideoDetails() {
         <div className="bg-gray-100 p-2 rounded-lg">
           <p>{videoData?.video?.description}</p>
         </div>
-        <Comment />
+        <Comment
+          videoId={videoId}
+          comments={comments}
+          setComments={setComments}
+        />
       </div>
       <div className="p-5">
         {a.map((item) => (

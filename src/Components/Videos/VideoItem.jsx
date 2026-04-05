@@ -12,7 +12,13 @@ function VideoItem({ channel, video }) {
   return (
     <Link to={`/video/${video?._id}`}>
       <div className=" hover:bg-gray-100 rounded-lg overflow-hidden hover:shadow-md mb-2">
-        <img src={video?.thumbnailURL} width={"370px"} />
+        <img
+          src={video?.thumbnailURL}
+          style={{
+            width: "370px",
+            height: "250px",
+          }}
+        />
         <div className="flex justify-between">
           <div className="p-3">
             <h3 className="font-semibold text-xl font-roboto">
