@@ -30,31 +30,36 @@ function Flyout({ setIsOpen }) {
           className="text-3xl cursor-pointer"
           onClick={() => setIsOpen(false)}
         />
-        <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
+        <Link to="/">
+          <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
+        </Link>
       </div>
       <div className="overflow-auto h-[90vh]">
         <div className="flex flex-col gap-5 p-5 ">
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
-            <AiFillHome className="text-3xl" />
-            <span>Home</span>
-          </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <Link to="/">
+            <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+              <AiFillHome className="text-3xl" />
+              <span>Home</span>
+            </div>
+          </Link>
+
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <SiYoutubeshorts className="text-3xl" />
             <span>Shorts</span>
           </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <MdOutlineSubscriptions className="text-3xl" />
             <span>Subscriptions</span>
           </div>
 
           <div
-            className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg"
+            className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer"
             onClick={() => handleAccount()}
           >
             <VscAccount className="text-3xl" />
             <span>You</span>
           </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <GrHistory className="text-3xl" />
             <span>History</span>
           </div>
@@ -64,7 +69,7 @@ function Flyout({ setIsOpen }) {
           <div className="flex flex-col gap-5 p-5">
             <p>Sign in to like videos, comment and subscribe.</p>
             <div className="flex justify-center">
-              <button className="flex items-center gap-2 w-[50%] border rounded-full px-3 py-2 text-blue-800">
+              <button className="flex items-center gap-2 w-[50%] border rounded-full px-3 py-2 text-blue-800 cursor-pointer">
                 <VscAccount className="text-2xl" /> Sign in
               </button>
             </div>
@@ -73,16 +78,16 @@ function Flyout({ setIsOpen }) {
 
         <hr />
         <div className="flex flex-col gap-5 p-5 ">
-          <span className="font-bold">Explore</span>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <span className="font-bold cursor-pointer">Explore</span>
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <RiShoppingBag4Line className="text-3xl" />
             <span>Shopping</span>
           </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <IoMusicalNoteOutline className="text-3xl" />
             <span>Music</span>
           </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
             <ImFilm className="text-3xl" />
             <span>Films</span>
           </div>

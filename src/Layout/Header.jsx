@@ -77,15 +77,15 @@ function Header() {
     <>
       {!mobileSearch ? (
         <header className="pl:0 fixed inset-x-0 top-0 z-30 flex justify-between sm:pl-10 p-3 items-center bg-white shadow-sm ">
-          <Link to="/">
-            <div className="flex gap-5 items-center">
-              <RxHamburgerMenu
-                className="text-2xl cursor-pointer"
-                onClick={() => setIsOpen(true)}
-              />
+          <div className="flex gap-5 items-center">
+            <RxHamburgerMenu
+              className="text-2xl cursor-pointer"
+              onClick={() => setIsOpen(true)}
+            />
+            <Link to="/">
               <div dangerouslySetInnerHTML={{ __html: youtube_icon }} />
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           <div className="flex-1 px-3 flex items-center justify-center">
             <input
@@ -115,7 +115,7 @@ function Header() {
             {userData ? (
               <div className="relative">
                 <span
-                  className="hidden sm:flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl cursor-pointer"
+                  className="hidden sm:flex justify-center w-10 h-10 rounded-full bg-blue-400 text-2xl cursor-pointer"
                   onClick={() => setUserMenu(!userMenu)}
                 >
                   {userData[0].toLowerCase()}
@@ -130,8 +130,7 @@ function Header() {
                         {userData[0].toLowerCase()}
                       </span>
                       <div className="flex flex-col">
-                        <span>userData</span>
-                        <span>handleId</span>
+                        <span>{userData}</span>
                         <Link to="/channel-list">
                           <span className="text-blue-600 hover:underline ">
                             View your Channels
@@ -164,7 +163,7 @@ function Header() {
               <div className="relative">
                 <span
                   onClick={() => setUserMenuMobile(!userMenuMobile)}
-                  className="sm:hidden w-10 h-10 rounded-full border flex  justify-center bg-blue-400 text-2xl cursor-pointer"
+                  className="sm:hidden w-10 h-10 rounded-full  flex  justify-center bg-blue-400 text-2xl cursor-pointer"
                 >
                   {userData[0].toLowerCase()}
                 </span>
@@ -216,6 +215,7 @@ function Header() {
             type="text"
             placeholder="Search"
             className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring focus:ring-blue-300"
+            onChange={(e) => handleInputChange(e.target.value)}
           />
         </div>
       )}

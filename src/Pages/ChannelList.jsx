@@ -15,15 +15,18 @@ function ChannelList() {
       .then((response) => setChannelList(response.data.channelList));
   }, []);
   return (
-    <div className="m-8 grid sm:grid-cols-4 md:grid-cols-5 gap-5">
-      {channelList?.map((channel) => (
-        <Link to={`/channel/${channel._id}`}>
-          <span className="border-1 rounded-lg text-center p-2">
-            {channel.channelName}
-          </span>
-        </Link>
-      ))}
-    </div>
+    <>
+      <h2 className="text-center font-bold p-5 text-2xl">Your Channels</h2>
+      <div className="m-8 grid sm:grid-cols-4 md:grid-cols-5 gap-5">
+        {channelList?.map((channel) => (
+          <Link to={`/channel/${channel._id}`}>
+            <span className="border-1 rounded-lg text-center p-2">
+              {channel.channelName}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
 

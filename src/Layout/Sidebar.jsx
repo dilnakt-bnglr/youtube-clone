@@ -26,20 +26,20 @@ function Sidebar() {
           </div>
         </Link>
       </div>
-      <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg">
-        <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg cursor-pointer">
+        <div className="flex flex-col items-center gap-2 ">
           <SiYoutubeshorts className="text-xl" />
           <span>Shorts</span>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200  rounded-lg">
+      <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200  rounded-lg cursor-pointer">
         <div className="flex flex-col items-center gap-2">
           <MdOutlineSubscriptions className="text-xl" />
           <span>Subscriptions</span>
         </div>
       </div>
       <div
-        className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg"
+        className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg cursor-pointer"
         onClick={() => handleAccount()}
       >
         <div className="flex flex-col items-center gap-2">

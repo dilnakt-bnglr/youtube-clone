@@ -91,14 +91,19 @@ function Channel() {
           />
         </div>
         <div className="p-5 flex gap-5">
-          <div className="w-32 h-32 rounded-full bg-indigo-500"></div>
+          {/* <div className="w-32 h-32 rounded-full bg-indigo-500">
+            {channelData?.channelName[0].toUpperCase()}
+          </div> */}
+          <span className="hidden sm:flex justify-center items-center w-32 h-32 rounded-full border-none bg-blue-400 text-6xl cursor-pointer">
+            {channelData?.channelName[0]?.toUpperCase()}
+          </span>
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-semibold mt-3">
               {channelData?.channelName}
             </h2>
             <p className="text-sm text-gray-600">
               {channelData?.channelHandleId} . <span>1M subscribers .</span>
-              <span> 100 videos</span>
+              <span> {channelVideos?.length} videos</span>
             </p>
             <p>Welcome to official youtube channel!</p>
             <div className=" flex gap-5 mt-2">
@@ -117,10 +122,17 @@ function Channel() {
           </div>
         </div>
         <div className=" gap-5 mb-5">
-          <span>Videos</span>
+          <span className="text-xl font-bold ml-5">Videos</span>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 p-4">
             {channelVideos?.map((video) => (
-              <VideoItem key={video._id} video={video} channel={true} />
+              <VideoItem
+                key={video._id}
+                video={video}
+                channel={true}
+                channelData={channelData}
+                channelVideos={channelVideos}
+                setChannelVideos={setChannelVideos}
+              />
             ))}
           </div>
         </div>

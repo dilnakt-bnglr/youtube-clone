@@ -93,13 +93,15 @@ function Comment({ videoId, comments, setComments }) {
         </div>
         {comments?.map((comment) => {
           return (
-            <div className="flex justify-start">
+            <div className="flex justify-start ">
               <div>
-                <VscAccount className="text-4xl mr-5" />
+                <span className="hidden sm:flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl cursor-pointer mr-4">
+                  {comment?.userName[0].toLowerCase()}
+                </span>
               </div>
               <div className="flex w-full justify-between mb-5">
                 <div>
-                  <span>{comment?.userName}</span>
+                  <span className="font-semibold">{comment?.userName}</span>
                   <p>{comment?.comment}</p>
                 </div>
                 <div className="relative mt-3">
