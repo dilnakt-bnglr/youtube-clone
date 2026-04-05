@@ -9,8 +9,20 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoMusicalNoteOutline } from "react-icons/io5";
 import { ImFilm } from "react-icons/im";
 import { GrHistory } from "react-icons/gr";
+import { Link, useNavigate } from "react-router-dom";
 
 function Flyout({ setIsOpen }) {
+  const userData = JSON.parse(localStorage.getItem("userName"));
+  const navigate = useNavigate();
+
+  const handleAccount = () => {
+    if (userData) {
+      navigate("/channel-list");
+    } else {
+      navigate("/signin");
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-5 fixed top-0 p-5 z-50">
@@ -34,7 +46,11 @@ function Flyout({ setIsOpen }) {
             <MdOutlineSubscriptions className="text-3xl" />
             <span>Subscriptions</span>
           </div>
-          <div className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg">
+
+          <div
+            className="flex gap-5 p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg"
+            onClick={() => handleAccount()}
+          >
             <VscAccount className="text-3xl" />
             <span>You</span>
           </div>
@@ -44,14 +60,17 @@ function Flyout({ setIsOpen }) {
           </div>
         </div>
         <hr />
-        <div className="flex flex-col gap-5 p-5">
-          <p>Sign in to like videos, comment and subscribe.</p>
-          <div className="flex justify-center">
-            <button className="flex items-center gap-2 w-[50%] border rounded-full px-3 py-2 text-blue-800">
-              <VscAccount className="text-2xl" /> Sign in
-            </button>
+        {!userData && (
+          <div className="flex flex-col gap-5 p-5">
+            <p>Sign in to like videos, comment and subscribe.</p>
+            <div className="flex justify-center">
+              <button className="flex items-center gap-2 w-[50%] border rounded-full px-3 py-2 text-blue-800">
+                <VscAccount className="text-2xl" /> Sign in
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
         <hr />
         <div className="flex flex-col gap-5 p-5 ">
           <span className="font-bold">Explore</span>

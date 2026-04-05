@@ -9,9 +9,9 @@ function Comment({ videoId, comments, setComments }) {
   const [comment, setComment] = useState("");
   const [selectedComment, setSelectedComment] = useState("");
   const userId = JSON.parse(localStorage.getItem("userId"));
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const handleAddComment = () => {
-    const token = JSON.parse(localStorage.getItem("token"));
     const bodyObject = {
       videoId,
       comment,
@@ -38,9 +38,21 @@ function Comment({ videoId, comments, setComments }) {
     console.log("Edit comment");
   };
 
-  const handleDelete = () => {
-    // Placeholder for delete functionality
-    console.log("Delete comment");
+  const handleDelete = (commentId) => {
+    axios
+      .delete(`http://localhost:5000/api/comment/${commentId}`, {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      })
+      .then((response) => {
+        const deletedComment = response.data.deletedComment;
+        const existingComments = [...comments];
+        const commentsAfterDeletion = existingComments.filter(
+          (comment) => comment?._id !== deletedComment?._id,
+        );
+        setComments(commentsAfterDeletion);
+      });
   };
 
   return (
@@ -56,6 +68,7 @@ function Comment({ videoId, comments, setComments }) {
               className="outline-none border-b-1 border-gray-300  p-1 rounded-lg w-full mb-3"
               onClick={() => setShowButtons(true)}
               onChange={(e) => setComment(e.target.value)}
+              value={comment}
               disabled={!userId}
             />
           </div>
@@ -123,7 +136,7 @@ function Comment({ videoId, comments, setComments }) {
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                             onClick={() => {
                               setShowMenu(false);
-                              handleDelete();
+                              handleDelete(comment?._id);
                             }}
                           >
                             Delete

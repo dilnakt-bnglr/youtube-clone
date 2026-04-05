@@ -3,9 +3,19 @@ import { AiFillHome } from "react-icons/ai";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Sidebar() {
+  const userData = JSON.parse(localStorage.getItem("userName"));
+  const navigate = useNavigate();
+
+  const handleAccount = () => {
+    if (userData) {
+      navigate("/channel-list");
+    } else {
+      navigate("/signin");
+    }
+  };
   return (
     <nav className="h-full flex flex-col justify-start pt-5 gap-4 text-sm text-gray-800  bg-white ">
       <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg">
@@ -28,7 +38,10 @@ function Sidebar() {
           <span>Subscriptions</span>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg">
+      <div
+        className="flex flex-col items-center gap-3 px-4 py-2 hover:bg-gray-200 rounded-lg"
+        onClick={() => handleAccount()}
+      >
         <div className="flex flex-col items-center gap-2">
           <VscAccount className="text-xl" />
           <span>You</span>
