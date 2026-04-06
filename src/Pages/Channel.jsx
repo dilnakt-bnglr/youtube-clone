@@ -91,11 +91,8 @@ function Channel() {
           />
         </div>
         <div className="p-5 flex gap-5">
-          {/* <div className="w-32 h-32 rounded-full bg-indigo-500">
-            {channelData?.channelName[0].toUpperCase()}
-          </div> */}
           <span className="hidden sm:flex justify-center items-center w-32 h-32 rounded-full border-none bg-blue-400 text-6xl cursor-pointer">
-            {channelData?.channelName[0]?.toUpperCase()}
+            {channelData?.channelName?.[0]?.toUpperCase()}
           </span>
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-semibold mt-3">

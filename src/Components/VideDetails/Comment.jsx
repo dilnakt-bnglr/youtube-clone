@@ -8,6 +8,7 @@ function Comment({ videoId, comments, setComments }) {
   const [showButtons, setShowButtons] = useState(false);
   const [comment, setComment] = useState("");
   const [selectedComment, setSelectedComment] = useState("");
+  const [selectedCommentForEdit, setSelectedCommentForEdit] = useState("");
   const userId = JSON.parse(localStorage.getItem("userId"));
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -33,9 +34,15 @@ function Comment({ videoId, comments, setComments }) {
       });
   };
 
-  const handleEdit = () => {
-    // Placeholder for edit functionality
-    console.log("Edit comment");
+  const handleEdit = (comment) => {
+    setSelectedCommentForEdit(comment);
+  };
+
+  const handleEditedComment = (e) => {
+    const updatedComment = e.target.value;
+    const existingComment = { ...selectedCommentForEdit };
+    existingComment.comment = updatedComment;
+    setSelectedCommentForEdit(existingComment);
   };
 
   const handleDelete = (commentId) => {
@@ -54,6 +61,12 @@ function Comment({ videoId, comments, setComments }) {
         setComments(commentsAfterDeletion);
       });
   };
+
+  const handleCancelEdit = () => {
+    setSelectedCommentForEdit("");
+  };
+
+  const handleUpdateEdit = () => {};
 
   return (
     <div className="p-5">
@@ -100,10 +113,34 @@ function Comment({ videoId, comments, setComments }) {
                 </span>
               </div>
               <div className="flex w-full justify-between mb-5">
-                <div>
-                  <span className="font-semibold">{comment?.userName}</span>
-                  <p>{comment?.comment}</p>
-                </div>
+                {selectedCommentForEdit?._id !== comment?._id ? (
+                  <div>
+                    <span className="font-semibold">{comment?.userName}</span>
+                    <p>{comment?.comment}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      value={selectedCommentForEdit?.comment}
+                      className="outline-none border-b-1 border-gray-300  p-1 rounded-lg w-full mb-3"
+                      onChange={(e) => handleEditedComment(e)}
+                    />
+                    <button
+                      className="hover:rounded-full hover:bg-gray-200 cursor-pointer p-2"
+                      onClick={() => handleCancelEdit()}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="hover:rounded-full hover:bg-gray-200 cursor-pointer p-2"
+                      onClick={() => handleUpdateEdit()}
+                    >
+                      Update
+                    </button>
+                  </div>
+                )}
+
                 <div className="relative mt-3">
                   <HiOutlineDotsVertical
                     onClick={() => {
@@ -118,7 +155,6 @@ function Comment({ videoId, comments, setComments }) {
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                         onClick={() => {
                           setShowMenu(false);
-                          handleEdit();
                         }}
                       >
                         Report
@@ -129,7 +165,7 @@ function Comment({ videoId, comments, setComments }) {
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                             onClick={() => {
                               setShowMenu(false);
-                              handleEdit();
+                              handleEdit(comment);
                             }}
                           >
                             Edit
