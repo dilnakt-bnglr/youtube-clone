@@ -117,7 +117,9 @@ function Channel() {
             <p>Welcome to official youtube channel!</p>
             <div className=" flex gap-5 mt-2">
               {channelData?.userId !== loggedInUser && (
-                <button className="border-1 rounded-lg p-1">Subscribe</button>
+                <button className="bg-gray-500 hover:bg-black text-white font-semibold rounded-lg p-2 cursor-pointer">
+                  Subscribe
+                </button>
               )}
 
               {channelData?.userId === loggedInUser && (
