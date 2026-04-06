@@ -1,16 +1,52 @@
-# React + Vite
+# YouTube Clone Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack YouTube clone application built using React and NodeJS. This frontend provides a video streaming experience with user authentication, video management, and channel management.
 
-Currently, two official plugins are available:
+## GitHub Repository
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://github.com/dilnakt-bnglr/youtube-clone
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend Framework**: React 19
+- **Build Tool**: Vite
+- **State Management**: Redux Toolkit
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM
+- **HTTP Client**: Axios
+- **Icons**: React Icons
 
-## Expanding the ESLint configuration
+## Features Implemented
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **User Authentication**: Sign up and sign in functionality using JWT
+- **Video Management**: Upload, view, edit and delete videos
+- **Channel Management**: Create and edit and view user channels
+- **Video Categories**: Browse videos by categories
+- **Video Details**: Detailed view with comments and interactions
+- **Responsive Design**: Mobile-friendly UI
+- **Search and Navigation**: Sidebar navigation and flyout menus
+
+## Setup Instructions
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/dilnakt-bnglr/youtube-clone.git
+   cd youtube-clone-frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`.
