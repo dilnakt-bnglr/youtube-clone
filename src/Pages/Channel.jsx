@@ -189,6 +189,8 @@ function Channel() {
             <option value="Tech">Tech</option>
             <option value="Cooking">Cooking</option>
             <option value="Gaming">Gaming</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Travel">Travel</option>
           </select>
           <textarea
             name="description"

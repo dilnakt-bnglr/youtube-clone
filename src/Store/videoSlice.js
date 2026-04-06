@@ -5,6 +5,7 @@ const videoSlice = createSlice({
   initialState: {
     videos: [],
     videoBackup: [],
+    selectedCategory: "All",
   },
   reducers: {
     // Reducer to set the list of videos in the Redux store
@@ -27,6 +28,7 @@ const videoSlice = createSlice({
     // Reducer to filter videos based on selected category and update the videos in the Redux store
     filterByCategories: (state, action) => {
       const selectedCategory = action.payload;
+      state.selectedCategory = selectedCategory;
       if (selectedCategory == "All") {
         state.videos = state.videoBackup;
       } else {
