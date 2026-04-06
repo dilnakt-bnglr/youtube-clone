@@ -208,6 +208,8 @@ function Channel() {
         <EditChannelVideo
           selectedVideoToEdit={selectedVideoToEdit}
           setSelectedVideoToEdit={setSelectedVideoToEdit}
+          channelVideos={channelVideos}
+          setChannelVideos={setChannelVideos}
         />
       )}
     </>

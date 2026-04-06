@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import Modal from "../Modal";
+import axios from "axios";
 
-function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
+function EditChannelVideo({
+  selectedVideoToEdit,
+  setSelectedVideoToEdit,
+  channelVideos,
+  setChannelVideos,
+}) {
   const [error, setError] = useState("");
+  const token = JSON.parse(localStorage.getItem("token")) || "";
   const handleVideoEditChange = (e) => {
     if (error) {
       setError("");
@@ -33,12 +40,34 @@ function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
     }
     const bodyObject = {
       title: selectedVideoToEdit?.title,
-      videoURl: selectedVideoToEdit?.videoURL,
+      videoURL: selectedVideoToEdit?.videoURL,
       thumbnailURL: selectedVideoToEdit?.thumbnailURL,
       category: selectedVideoToEdit?.category,
       description: selectedVideoToEdit.description,
     };
-    console.log(bodyObject);
+    axios
+      .put(
+        `http://localhost:5000/api/video/${selectedVideoToEdit?._id}`,
+        bodyObject,
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
+        },
+      )
+      .then((response) => {
+        setSelectedVideoToEdit("");
+
+        const updatedVideo = response.data.updatedVideo;
+        const existingVideos = [...channelVideos];
+        const videosAfterEditing = existingVideos.map((video) => {
+          if (video?._id === updatedVideo?._id) {
+            video = updatedVideo;
+          }
+          return video;
+        });
+        setChannelVideos(videosAfterEditing);
+      });
   };
 
   return (
@@ -49,6 +78,7 @@ function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
           <input
             type="text"
             name="title"
+            placeholder="title"
             value={selectedVideoToEdit?.title}
             className="w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => handleVideoEditChange(e)}
@@ -56,6 +86,7 @@ function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
           <input
             type="text"
             name="videoURL"
+            placeholder="videoURL"
             value={selectedVideoToEdit?.videoURL}
             className="w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => handleVideoEditChange(e)}
@@ -63,6 +94,7 @@ function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
           <input
             type="text"
             name="thumbnailURL"
+            placeholder="thumbnailURL"
             value={selectedVideoToEdit?.thumbnailURL}
             className="w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => handleVideoEditChange(e)}
@@ -83,6 +115,7 @@ function EditChannelVideo({ selectedVideoToEdit, setSelectedVideoToEdit }) {
           </select>
           <textarea
             name="description"
+            placeholder="description"
             value={selectedVideoToEdit?.description}
             className="w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => handleVideoEditChange(e)}
