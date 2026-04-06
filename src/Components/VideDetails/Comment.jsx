@@ -12,6 +12,7 @@ function Comment({ videoId, comments, setComments }) {
   const userId = JSON.parse(localStorage.getItem("userId"));
   const token = JSON.parse(localStorage.getItem("token"));
 
+  // Function to handle adding a new comment by making an API call and updating the comments state with the newly added comment
   const handleAddComment = () => {
     const bodyObject = {
       videoId,
@@ -38,6 +39,7 @@ function Comment({ videoId, comments, setComments }) {
     setSelectedCommentForEdit(comment);
   };
 
+  // Function to handle changes in the edited comment input field and update the selected comment for edit state with the new comment value
   const handleEditedComment = (e) => {
     const updatedComment = e.target.value;
     const existingComment = { ...selectedCommentForEdit };
@@ -45,6 +47,7 @@ function Comment({ videoId, comments, setComments }) {
     setSelectedCommentForEdit(existingComment);
   };
 
+  // Function to handle deleting a comment by making an API call and updating the comments state by removing the deleted comment
   const handleDelete = (commentId) => {
     axios
       .delete(`http://localhost:5000/api/comment/${commentId}`, {
@@ -66,6 +69,7 @@ function Comment({ videoId, comments, setComments }) {
     setSelectedCommentForEdit("");
   };
 
+  // Function to handle updating the edited comment by making an API call and updating the comments state with the edited comment
   const handleUpdateEdit = (commentId) => {
     const bodyObject = { comment: selectedCommentForEdit.comment };
     axios
@@ -75,6 +79,7 @@ function Comment({ videoId, comments, setComments }) {
         },
       })
       .then((response) => {
+        // Update the comments state with the edited comment after successful update
         const updatedComment = response.data.updatedComment;
         const existingComments = [...comments];
         const editedComment = existingComments.map((comment) => {
@@ -176,7 +181,7 @@ function Comment({ videoId, comments, setComments }) {
                   {showMenu && selectedComment?._id === comment?._id && (
                     <div className="absolute right-0 top-6 bg-white border border-gray-300 rounded shadow-md z-10">
                       <button
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer"
                         onClick={() => {
                           setShowMenu(false);
                         }}
@@ -186,7 +191,7 @@ function Comment({ videoId, comments, setComments }) {
                       {comment?.userId === userId && (
                         <>
                           <button
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer"
                             onClick={() => {
                               setShowMenu(false);
                               handleEdit(comment);
@@ -195,7 +200,7 @@ function Comment({ videoId, comments, setComments }) {
                             Edit
                           </button>
                           <button
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left cursor-pointer"
                             onClick={() => {
                               setShowMenu(false);
                               handleDelete(comment?._id);

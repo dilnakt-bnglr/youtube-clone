@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import EditChannelVideo from "../Components/Channel/EditChannelVideo";
+import Loading from "../Components/Shared/Loading";
 
 function Channel() {
   const [showModal, setShowModal] = useState(false);
@@ -17,10 +18,12 @@ function Channel() {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [selectedVideoToEdit, setSelectedVideoToEdit] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const channelId = useParams().id;
   const loggedInUser = JSON.parse(localStorage.getItem("userId")) || "";
 
   useEffect(() => {
+    // API call to fetch channel details and videos for the given channel ID
     axios
       .get(`http://localhost:5000/api/channel/${channelId}`)
       .then((response) => {
@@ -30,6 +33,7 @@ function Channel() {
       .catch((err) => console.log(err));
   }, [channelId]);
 
+  // Function to handle changes in the video upload form
   const handleChange = (e) => {
     if (error) {
       setError("");
@@ -38,6 +42,7 @@ function Channel() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Function to handle video upload form submission
   const handleSubmit = () => {
     const required = [
       "title",
@@ -53,7 +58,9 @@ function Channel() {
         return;
       }
     }
+    // API call to upload a new video for the channel
     const token = JSON.parse(localStorage.getItem("token"));
+    setIsLoading(true);
     const bodyObject = {
       channelId,
       title: formData.title,
@@ -62,6 +69,7 @@ function Channel() {
       category: formData.category,
       description: formData.description,
     };
+    // API call to upload a new video for the channel
     axios
       .post("http://localhost:5000/api/video", bodyObject, {
         headers: {
@@ -70,6 +78,8 @@ function Channel() {
         },
       })
       .then((response) => {
+        // Handle successful video upload response
+        setIsLoading(false);
         setSuccessMsg("Video Uploaded Successfully");
         handleClose();
         const addedVideo = response.data.video;
@@ -78,6 +88,7 @@ function Channel() {
         setChannelVideos(currentVideos);
       });
   };
+  // Function to handle closing the video upload modal
   const handleClose = () => {
     setSuccessMsg("");
     setShowModal(false);
@@ -141,6 +152,7 @@ function Channel() {
       </div>
       <Modal show={showModal} onClose={handleClose}>
         <div className="m:0 flex flex-col items-center justify-center gap-4 sm:ml-20">
+          {isLoading && <Loading />}
           <h2 className="text-2xl font-bold mb-8">Upload Your Video</h2>
           <input
             type="text"

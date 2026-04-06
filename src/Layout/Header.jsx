@@ -31,6 +31,7 @@ function Header() {
   const [error, setError] = useState("");
 
   const handleCreateChannel = () => {
+    //
     const emptyInput = [];
     if (!channelName) {
       emptyInput.push("channelName");
@@ -43,6 +44,7 @@ function Header() {
       setError(`Required fields are missing: ${emptyInput.join(",")}`);
       return;
     }
+    // API call to create a new channel with the provided channel name and handle ID
     const bodyObject = { channelName, channelHandleId };
     const token = JSON.parse(localStorage.getItem("token"));
     axios
@@ -61,12 +63,14 @@ function Header() {
       });
   };
 
+  // Function to handle user sign out by clearing user information from the Redux store and local storage, and navigating to the home page
   const handleSignOut = () => {
     dispatch(signOut());
     localStorage.clear();
     navigate("/");
   };
 
+  // Function to handle changes in the search input and dispatch an action to filter videos based on the search string
   const handleInputChange = (value) => {
     dispatch(filterVideos(value));
   };
@@ -110,7 +114,7 @@ function Header() {
               </button>
             )}
 
-            <FiBell className="hidden sm:block text-2xl " />
+            {/* <FiBell className="hidden sm:block text-2xl cursor-pointer" /> */}
             {/* /* Desktop User Menu * / */}
             {userData ? (
               <div className="relative">
@@ -124,14 +128,17 @@ function Header() {
                   <div className="hidden sm:block absolute right-8 top-10 w-[250px] bg-white border border-gray-300 rounded shadow-md z-10 p-4">
                     <div className="flex gap-5 border-b-1 border-gray-300 pb-4 mb-4">
                       <span
-                        className="hidden sm:flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl cursor-pointer"
+                        className="hidden sm:flex justify-center w-10 h-10 rounded-full  bg-blue-400 text-2xl cursor-pointer"
                         onClick={() => setUserMenu(!userMenu)}
                       >
                         {userData[0].toLowerCase()}
                       </span>
                       <div className="flex flex-col">
                         <span>{userData}</span>
-                        <Link to="/channel-list">
+                        <Link
+                          to="/channel-list"
+                          onClick={() => setUserMenu(false)}
+                        >
                           <span className="text-blue-600 hover:underline ">
                             View your Channels
                           </span>
@@ -170,15 +177,17 @@ function Header() {
                 {userMenuMobile && (
                   <div className="sm:hidden absolute right-8 top-10 w-[300px] bg-white border border-gray-300 rounded shadow-md z-10 p-4">
                     <div className="flex gap-5 border-b-1 border-gray-300 pb-4 mb-4">
-                      <span className="flex justify-center w-10 h-10 rounded-full border bg-blue-400 text-2xl ">
+                      <span className="flex justify-center w-10 h-10 rounded-full bg-blue-400 text-2xl ">
                         {userData[0].toLowerCase()}
                       </span>
                       <div className="flex flex-col">
-                        <span>userData</span>
-                        <span>handleId</span>
-                        <Link to="/channel/:id">
-                          <span className="text-blue-600 hover:underline">
-                            View your Channel
+                        <span>{userData}</span>
+                        <Link
+                          to="/channel-list"
+                          onClick={() => setUserMenuMobile(false)}
+                        >
+                          <span className="text-blue-600 hover:underline ">
+                            View your Channels
                           </span>
                         </Link>
                       </div>
@@ -249,13 +258,13 @@ function Header() {
       </div>
       <Modal show={showModal} onClose={handleClose}>
         <h2 className="text-xl font-bold">How you'll appear</h2>
-        <div className="flex flex-col items-center justify-center gap-4 ml-20 p-10">
+        <div className="flex flex-col items-center justify-center gap-4 sm:ml-20 p-10">
           <VscAccount className="text-8xl" />
           <p className="text-blue-600">Select Picture</p>
           <input
             type="text"
             placeholder="Channel Name"
-            className="w-[80%] border-1 p-2 rounded-lg"
+            className="w-full sm:w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => {
               setChannelName(e.target.value);
               setError("");
@@ -264,7 +273,7 @@ function Header() {
           <input
             type="text"
             placeholder="Handle ID"
-            className="w-[80%] border-1 p-2 rounded-lg"
+            className="w-full sm:w-[80%] border-1 p-2 rounded-lg"
             onChange={(e) => {
               setChannelHandleId(e.target.value);
               setError("");

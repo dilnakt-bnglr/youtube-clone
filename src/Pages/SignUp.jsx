@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../Components/Shared/Loading";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -8,9 +9,12 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Function to handle user registration
   const handleRegister = () => {
+    // Input validation
     const emptyInput = [];
     if (!userName) {
       emptyInput.push("userName");
@@ -25,16 +29,21 @@ function SignUp() {
       setError(`Required fields are missing: ${emptyInput.join(",")}`);
       return;
     }
+    // API call to register the user
     const bodyObject = { userName, email, password };
+    setIsLoading(true);
     axios
       .post("http://localhost:5000/api/register", bodyObject)
       .then((data) => {
+        setIsLoading(false);
         setSuccessMsg("User Registration Successfull");
         setTimeout(() => {
           navigate("/signin");
-        }, 3000);
+        }, 1000);
       })
       .catch((error) => {
+        // Handle error response from the server
+        setIsLoading(false);
         const errorMsg =
           error?.response?.data?.message ||
           "An error occurred during registration.";
@@ -44,6 +53,7 @@ function SignUp() {
 
   return (
     <div className="flex md:min-h-[calc(100vh-64px)] justify-center items-center">
+      {isLoading && <Loading />}
       <div className="bg-white  p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         <input

@@ -4,7 +4,9 @@ import { filterByCategories } from "../../Store/videoSlice";
 
 function Category() {
   const dispatch = useDispatch();
+  // Get the list of videos from the Redux store and extract unique categories
   const videos = useSelector((state) => state.video.videoBackup);
+  // Create a list of unique categories from the videos and add "All" as the first category
   const categories = [...new Set(videos.map((video) => video.category))];
   categories.unshift("All");
   return (

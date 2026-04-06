@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
+import Loading from "../Shared/Loading";
 
 function EditChannelVideo({
   selectedVideoToEdit,
@@ -9,7 +10,9 @@ function EditChannelVideo({
   setChannelVideos,
 }) {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const token = JSON.parse(localStorage.getItem("token")) || "";
+  // Function to handle changes in the video edit form and update the selected video state
   const handleVideoEditChange = (e) => {
     if (error) {
       setError("");
@@ -20,6 +23,7 @@ function EditChannelVideo({
     setSelectedVideoToEdit(currentFormValues);
   };
 
+  // Function to handle video update form submission and make an API call to update the video details
   const handleEditVideoUpdate = () => {
     const required = [
       "title",
@@ -38,6 +42,8 @@ function EditChannelVideo({
         return;
       }
     }
+    setIsLoading(true);
+    // API call to update the video details for the selected video
     const bodyObject = {
       title: selectedVideoToEdit?.title,
       videoURL: selectedVideoToEdit?.videoURL,
@@ -56,8 +62,9 @@ function EditChannelVideo({
         },
       )
       .then((response) => {
+        setIsLoading(false);
         setSelectedVideoToEdit("");
-
+        // Update the video details in the channel videos state after successful update
         const updatedVideo = response.data.updatedVideo;
         const existingVideos = [...channelVideos];
         const videosAfterEditing = existingVideos.map((video) => {
@@ -74,6 +81,7 @@ function EditChannelVideo({
     <>
       <Modal show={true}>
         <div className="m:0 flex flex-col items-center justify-center gap-4 sm:ml-20">
+          {isLoading && <Loading />}
           <h2 className="text-2xl font-bold mb-8">Edit Your Video</h2>
           <input
             type="text"

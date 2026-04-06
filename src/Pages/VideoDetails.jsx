@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
+import { sampleThumnails } from "../utils/sampleThumbnail.js";
 
 function VideoDetails() {
-  const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const videoId = useParams().id;
   const [videoData, setVideoData] = useState("");
   const [comments, setComments] = useState([]);
@@ -20,20 +20,42 @@ function VideoDetails() {
   const [isUserLiked, setIsUserLiked] = useState(false);
   const [isUserDisliked, setIsUserDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   useEffect(() => {
+    // API call to fetch video details, comments, and user like/dislike status for the given video ID
     axios
       .get(`http://localhost:5000/api/video/${videoId}`)
       .then((response) => {
         setVideoData(response.data);
         setComments(response.data.comments);
+        // Check if the user has liked or disliked the video and set the respective states
+        const totalLikes = response?.data?.videoLikes;
+        totalLikes?.map((like) => {
+          if (like?.userId === userId) {
+            setIsUserLiked(true);
+          }
+        });
+        const totalDislikes = response?.data?.videoDisLikes;
+        totalDislikes?.map((dislike) => {
+          if (dislike?.userId === userId) {
+            setIsUserDisliked(true);
+          }
+        });
+
+        setLikeCount(totalLikes?.length);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [videoId]);
 
+  // Function to handle like button click and update like/dislike status accordingly
   const handleLike = () => {
+    if (userId === "") {
+      setShowLoginPopup(!showLoginPopup);
+      return;
+    }
     const bodyObject = { userId, videoId };
     axios
       .post("http://localhost:5000/api/user-action/like", bodyObject, {
@@ -44,15 +66,20 @@ function VideoDetails() {
       })
       .then((response) => {
         setIsUserLiked(response.data.isUserLiked);
-        const totalCount = response.data.totalLikes;
-        setLikeCount(totalCount?.length);
+        const totalCount = response?.data?.totalLikes;
+        if (totalCount) setLikeCount(totalCount?.length);
         if (response.data.isUserDisliked !== undefined) {
           setIsUserDisliked(response.data.isUserDisliked);
         }
       });
   };
 
+  // Function to handle dislike button click and update like/dislike status accordingly
   const handleDisLike = () => {
+    if (userId === "") {
+      setShowLoginPopup(!showLoginPopup);
+      return;
+    }
     const bodyObject = { userId, videoId };
     axios
       .post("http://localhost:5000/api/user-action/dislike", bodyObject, {
@@ -65,53 +92,90 @@ function VideoDetails() {
         if (response.data.isUserLiked !== undefined) {
           setIsUserLiked(response.data.isUserLiked);
         }
+        const totalCount = response?.data?.totalLikes;
+        if (totalCount) setLikeCount(totalCount?.length);
         setIsUserDisliked(response.data.isUserDisliked);
       });
   };
 
   return (
-    <div className="block sm:flex">
-      <div className="p-2 mt-5 sm:w-[60%]">
+    <div className="block min-[1200px]:flex">
+      <div className="p-2 mt-5 min-[1200px]:w-[60%]">
         <iframe
           width={"100%"}
-          height={"30%"}
           src={videoData?.video?.videoURL}
           allowfullscreen
+          className="h-70 min-[1200px]:h-90"
         ></iframe>
         <div className="p-3">
           <h3 className="font-semibold text-xl font-roboto">
             {videoData?.video?.title}
           </h3>
-          <div className="flex justify-between gap-5">
-            <div>
-              <Link to={`/channel/${videoData?.channelDetails?._id}`}>
-                <h5 className="text-sm text-gray-600 ">
-                  {videoData?.channelDetails?.channelName}
-                </h5>
-              </Link>
-
-              <p className="text-sm text-gray-500">1M views • 2 days ago</p>
-            </div>
+          <div className="flex flex-col md:flex-row justify-between gap-5">
             <div className="flex gap-5">
-              <div className="border-1 rounded-full p-2 text-2xl w-24 flex justify-between bg-gray-200 ">
-                {isUserLiked ? (
-                  <div className="flex justify-center items-center">
+              <div>
+                <Link to={`/channel/${videoData?.channelDetails?._id}`}>
+                  <h5 className="text-sm text-gray-600 ">
+                    {videoData?.channelDetails?.channelName}
+                  </h5>
+                </Link>
+
+                <p className="text-sm text-gray-500">1M views • 2 days ago</p>
+              </div>
+              <div>
+                <button className="bg-red-600 text-white px-4 py-2 rounded-full font-bold hover:bg-black cursor-pointer">
+                  Subscribe
+                </button>
+              </div>
+            </div>
+            <div className="flex gap-5 relative">
+              {showLoginPopup && (
+                <div
+                  className="absolute top-[-125px] right-35
+                 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-64 z-10"
+                >
+                  <div className="flex flex-col justify-between items-center mb-2">
+                    <span className="text-xl font-bold">Like this Video?</span>
+                    <p className="text-black-500 text-sm mt-2">
+                      Sign in to make your opinion count.
+                    </p>
+                    <button
+                      onClick={() => setShowLoginPopup(false)}
+                      className="text-gray-500 hover:text-gray-700 absolute top-2 right-2 cursor-pointer"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <Link
+                    to="/signin"
+                    className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 block text-center"
+                    onClick={() => setShowLoginPopup(false)}
+                  >
+                    Sign In
+                  </Link>
+                </div>
+              )}
+              <div className="rounded-full p-2 text-2xl w-20 flex justify-between bg-gray-200 ">
+                <div className="flex justify-center items-center">
+                  {likeCount ? (
                     <span className="text-sm ">{likeCount}</span>
+                  ) : null}
+                  {isUserLiked ? (
                     <button
                       className="cursor-pointer"
                       onClick={() => handleLike()}
                     >
                       <AiFillLike />
                     </button>
-                  </div>
-                ) : (
-                  <button
-                    className="cursor-pointer"
-                    onClick={() => handleLike()}
-                  >
-                    <BiLike />
-                  </button>
-                )}
+                  ) : (
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => handleLike()}
+                    >
+                      <BiLike />
+                    </button>
+                  )}
+                </div>
                 {isUserDisliked ? (
                   <button
                     className="cursor-pointer"
@@ -128,7 +192,7 @@ function VideoDetails() {
                   </button>
                 )}
               </div>
-              <div className="border-1 rounded-full p-2 text-2xl w-24 text-center bg-gray-200">
+              <div className=" rounded-full p-2 text-2xl w-15 text-center bg-gray-200">
                 <button className="cursor-pointer">
                   <PiShareFat />
                 </button>
@@ -146,8 +210,8 @@ function VideoDetails() {
         />
       </div>
       <div className="p-5">
-        {a.map((item) => (
-          <VideodetailItem key={item} />
+        {sampleThumnails?.map((item) => (
+          <VideodetailItem item={item} key={item?.id} />
         ))}
       </div>
     </div>

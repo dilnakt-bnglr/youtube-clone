@@ -6,9 +6,11 @@ const userSlice = createSlice({
     userName: "",
   },
   reducers: {
+    // Reducer to update the user information in the Redux store
     updateUser: (state, action) => {
       state.userName = action.payload.data.user;
     },
+    // Reducer to clear the user information from the Redux store on sign out
     signOut: (state) => {
       state.userName = "";
     },

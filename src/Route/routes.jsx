@@ -7,6 +7,7 @@ import VideoDetails from "../Pages/VideoDetails.jsx";
 import Channel from "../Pages/Channel.jsx";
 import ChannelList from "../Pages/ChannelList.jsx";
 
+// Define the application routes using React Router's createBrowserRouter function
 const router = createBrowserRouter([
   {
     element: <Layout />,

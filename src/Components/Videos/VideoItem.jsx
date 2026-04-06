@@ -16,6 +16,7 @@ function VideoItem({
   const userId = JSON.parse(localStorage.getItem("userId")) || "";
   const token = JSON.parse(localStorage.getItem("token")) || "";
 
+  // Function to handle deleting a video by making an API call and updating the channel videos state by removing the deleted video
   const handleDelete = () => {
     axios
       .delete(`http://localhost:5000/api/video/${video?._id}`, {

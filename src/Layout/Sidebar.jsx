@@ -9,6 +9,7 @@ function Sidebar() {
   const userData = JSON.parse(localStorage.getItem("userName"));
   const navigate = useNavigate();
 
+  // Function to handle navigation when the "You" option is clicked in the sidebar
   const handleAccount = () => {
     if (userData) {
       navigate("/channel-list");
