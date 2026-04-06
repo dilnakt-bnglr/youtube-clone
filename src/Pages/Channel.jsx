@@ -104,7 +104,10 @@ function Channel() {
             </p>
             <p>Welcome to official youtube channel!</p>
             <div className=" flex gap-5 mt-2">
-              <button className="border-1 rounded-lg p-1">Subscribe</button>
+              {channelData?.userId !== loggedInUser && (
+                <button className="border-1 rounded-lg p-1">Subscribe</button>
+              )}
+
               {channelData?.userId === loggedInUser && (
                 <button
                   disabled={channelData?.userId !== loggedInUser}

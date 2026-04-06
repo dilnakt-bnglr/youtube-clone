@@ -52,7 +52,7 @@ function SignUp() {
           value={userName}
           className="border-b-1 border-gray-300  p-3 rounded-lg w-full mb-4 "
           onChange={(e) => {
-            setUserName(e.target.value);
+            setUserName(e?.target?.value?.trim());
             setError("");
           }}
         />
@@ -62,7 +62,7 @@ function SignUp() {
           value={email}
           className="border-b-1 border-gray-300  p-3 rounded-lg w-full mb-4 "
           onChange={(e) => {
-            setEmail(e.target.value);
+            setEmail(e?.target?.value?.trim());
             setError("");
           }}
         />
@@ -72,7 +72,7 @@ function SignUp() {
           value={password}
           className="border-b-1 border-gray-300  p-3 rounded-lg w-full mb-6 "
           onChange={(e) => {
-            setPassword(e.target.value);
+            setPassword(e?.target?.value?.trim());
             setError("");
           }}
         />

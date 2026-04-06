@@ -51,7 +51,10 @@ function VideoItem({
             </h3>
           </Link>
 
-          <h5 className="text-sm text-gray-600 ">{video?.channelName}</h5>
+          <Link to={`/channel/${video?.channelId}`}>
+            <h5 className="text-sm text-gray-600 ">{video?.channelName}</h5>
+          </Link>
+
           <p className="text-sm text-gray-500">1M views • 2 days ago</p>
         </div>
         <div className="relative mt-5">

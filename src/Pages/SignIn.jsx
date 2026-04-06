@@ -56,7 +56,7 @@ function SignIn() {
           value={user}
           className="border-b-1 border-gray-300  p-3 rounded-lg w-full mb-4 "
           onChange={(e) => {
-            setUser(e.target.value);
+            setUser(e?.target?.value?.trim());
             setError("");
           }}
         />
@@ -66,7 +66,7 @@ function SignIn() {
           value={password}
           className="border-b-1 border-gray-300  p-3 rounded-lg w-full mb-6 "
           onChange={(e) => {
-            setPassword(e.target.value);
+            setPassword(e?.target?.value?.trim());
             setError("");
           }}
         />

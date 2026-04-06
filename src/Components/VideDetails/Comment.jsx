@@ -66,7 +66,27 @@ function Comment({ videoId, comments, setComments }) {
     setSelectedCommentForEdit("");
   };
 
-  const handleUpdateEdit = () => {};
+  const handleUpdateEdit = (commentId) => {
+    const bodyObject = { comment: selectedCommentForEdit.comment };
+    axios
+      .put(`http://localhost:5000/api/comment/${commentId}`, bodyObject, {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      })
+      .then((response) => {
+        const updatedComment = response.data.updatedComment;
+        const existingComments = [...comments];
+        const editedComment = existingComments.map((comment) => {
+          if (comment._id === updatedComment._id) {
+            comment.comment = updatedComment.comment;
+          }
+          return comment;
+        });
+        setComments(editedComment);
+        setSelectedCommentForEdit("");
+      });
+  };
 
   return (
     <div className="p-5">
@@ -89,7 +109,10 @@ function Comment({ videoId, comments, setComments }) {
           {showButtons && (
             <div className="flex gap-2 justify-end ">
               <button
-                onClick={() => setShowButtons(false)}
+                onClick={() => {
+                  setComment("");
+                  setShowButtons(false);
+                }}
                 className="hover:rounded-full hover:bg-gray-200 cursor-pointer p-2"
               >
                 Cancel
@@ -127,14 +150,15 @@ function Comment({ videoId, comments, setComments }) {
                       onChange={(e) => handleEditedComment(e)}
                     />
                     <button
-                      className="hover:rounded-full hover:bg-gray-200 cursor-pointer p-2"
+                      className="rounded-full hover:bg-gray-200 cursor-pointer p-2"
                       onClick={() => handleCancelEdit()}
                     >
                       Cancel
                     </button>
                     <button
-                      className="hover:rounded-full hover:bg-gray-200 cursor-pointer p-2"
-                      onClick={() => handleUpdateEdit()}
+                      className={`rounded-full hover:bg-gray-200 cursor-pointer p-2 ${selectedCommentForEdit?.comment ? "bg-blue-500" : "bg-gray-200"}  `}
+                      onClick={() => handleUpdateEdit(comment?._id)}
+                      disabled={!selectedCommentForEdit?.comment}
                     >
                       Update
                     </button>
