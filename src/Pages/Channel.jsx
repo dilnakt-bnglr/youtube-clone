@@ -7,6 +7,7 @@ import { VscAccount } from "react-icons/vsc";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import EditChannelVideo from "../Components/Channel/EditChannelVideo";
 
 function Channel() {
   const [showModal, setShowModal] = useState(false);
@@ -15,6 +16,7 @@ function Channel() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [selectedVideoToEdit, setSelectedVideoToEdit] = useState("");
   const channelId = useParams().id;
   const loggedInUser = JSON.parse(localStorage.getItem("userId")) || "";
 
@@ -35,7 +37,6 @@ function Channel() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(formData);
 
   const handleSubmit = () => {
     const required = [
@@ -132,6 +133,7 @@ function Channel() {
                 channelData={channelData}
                 channelVideos={channelVideos}
                 setChannelVideos={setChannelVideos}
+                setSelectedVideoToEdit={setSelectedVideoToEdit}
               />
             ))}
           </div>
@@ -202,6 +204,12 @@ function Channel() {
           </button>
         </div>
       </Modal>
+      {selectedVideoToEdit && (
+        <EditChannelVideo
+          selectedVideoToEdit={selectedVideoToEdit}
+          setSelectedVideoToEdit={setSelectedVideoToEdit}
+        />
+      )}
     </>
   );
 }

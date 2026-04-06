@@ -10,6 +10,7 @@ function VideoItem({
   channelData,
   channelVideos,
   setChannelVideos,
+  setSelectedVideoToEdit,
 }) {
   const [showMenu, setShowMenu] = useState(false);
   const userId = JSON.parse(localStorage.getItem("userId")) || "";
@@ -70,6 +71,7 @@ function VideoItem({
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setShowMenu(false);
+                  setSelectedVideoToEdit(video);
                 }}
               >
                 Edit
