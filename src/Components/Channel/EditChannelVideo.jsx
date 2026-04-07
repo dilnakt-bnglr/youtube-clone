@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import Loading from "../Shared/Loading";
+import { getToken } from "../../utils/getLocalStorageValues";
 
 function EditChannelVideo({
   selectedVideoToEdit,
@@ -11,7 +12,7 @@ function EditChannelVideo({
 }) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const token = JSON.parse(localStorage.getItem("token")) || "";
+  const token = getToken();
   // Function to handle changes in the video edit form and update the selected video state
   const handleVideoEditChange = (e) => {
     if (error) {

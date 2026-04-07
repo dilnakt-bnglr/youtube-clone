@@ -10,9 +10,10 @@ import { IoMusicalNoteOutline } from "react-icons/io5";
 import { ImFilm } from "react-icons/im";
 import { GrHistory } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserName } from "../utils/getLocalStorageValues.js";
 
 function Flyout({ setIsOpen }) {
-  const userData = JSON.parse(localStorage.getItem("userName"));
+  const userData = getUserName();
   const navigate = useNavigate();
 
   // Function to handle navigation when the "You" option is clicked in the sidebar

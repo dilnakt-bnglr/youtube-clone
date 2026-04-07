@@ -4,9 +4,10 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserName } from "../utils/getLocalStorageValues";
 
 function Sidebar() {
-  const userData = JSON.parse(localStorage.getItem("userName"));
+  const userData = getUserName();
   const navigate = useNavigate();
 
   // Function to handle navigation when the "You" option is clicked in the sidebar

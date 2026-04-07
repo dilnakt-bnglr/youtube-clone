@@ -12,11 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../Store/userSlice.js";
 import axios from "axios";
 import { filterVideos } from "../Store/videoSlice.js";
+import { getToken, getUserName } from "../utils/getLocalStorageValues.js";
 
 function Header() {
-  const userData =
-    useSelector((state) => state.user.userName) ||
-    JSON.parse(localStorage.getItem("userName"));
+  const userData = useSelector((state) => state.user.userName) || getUserName();
+  const token = getToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +46,7 @@ function Header() {
     }
     // API call to create a new channel with the provided channel name and handle ID
     const bodyObject = { channelName, channelHandleId };
-    const token = JSON.parse(localStorage.getItem("token"));
+
     axios
       .post("http://localhost:5000/api/channel", bodyObject, {
         headers: {

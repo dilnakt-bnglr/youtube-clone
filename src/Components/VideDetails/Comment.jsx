@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import axios from "axios";
+import { getToken, getUserId } from "../../utils/getLocalStorageValues";
 
 function Comment({ videoId, comments, setComments }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -9,8 +10,8 @@ function Comment({ videoId, comments, setComments }) {
   const [comment, setComment] = useState("");
   const [selectedComment, setSelectedComment] = useState("");
   const [selectedCommentForEdit, setSelectedCommentForEdit] = useState("");
-  const userId = JSON.parse(localStorage.getItem("userId"));
-  const token = JSON.parse(localStorage.getItem("token"));
+  const userId = getUserId();
+  const token = getToken();
 
   // Function to handle adding a new comment by making an API call and updating the comments state with the newly added comment
   const handleAddComment = () => {

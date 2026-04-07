@@ -3,6 +3,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { getToken, getUserId } from "../../utils/getLocalStorageValues";
 
 function VideoItem({
   channel,
@@ -13,8 +14,8 @@ function VideoItem({
   setSelectedVideoToEdit,
 }) {
   const [showMenu, setShowMenu] = useState(false);
-  const userId = JSON.parse(localStorage.getItem("userId")) || "";
-  const token = JSON.parse(localStorage.getItem("token")) || "";
+  const userId = getUserId();
+  const token = getToken();
 
   // Function to handle deleting a video by making an API call and updating the channel videos state by removing the deleted video
   const handleDelete = () => {

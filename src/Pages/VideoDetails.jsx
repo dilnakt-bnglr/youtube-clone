@@ -10,13 +10,14 @@ import axios from "axios";
 import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
 import { sampleThumnails } from "../utils/sampleThumbnail.js";
+import { getToken, getUserId } from "../utils/getLocalStorageValues";
 
 function VideoDetails() {
   const videoId = useParams().id;
   const [videoData, setVideoData] = useState("");
   const [comments, setComments] = useState([]);
-  const userId = JSON.parse(localStorage.getItem("userId")) || "";
-  const token = JSON.parse(localStorage.getItem("token")) || "";
+  const userId = getUserId();
+  const token = getToken();
   const [isUserLiked, setIsUserLiked] = useState(false);
   const [isUserDisliked, setIsUserDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);

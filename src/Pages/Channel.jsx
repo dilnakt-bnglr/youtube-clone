@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import EditChannelVideo from "../Components/Channel/EditChannelVideo";
 import Loading from "../Components/Shared/Loading";
+import { getToken, getUserId } from "../utils/getLocalStorageValues";
 
 function Channel() {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,8 @@ function Channel() {
   const [selectedVideoToEdit, setSelectedVideoToEdit] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const channelId = useParams().id;
-  const loggedInUser = JSON.parse(localStorage.getItem("userId")) || "";
+  const loggedInUser = getUserId();
+  const token = getToken();
 
   useEffect(() => {
     // API call to fetch channel details and videos for the given channel ID
@@ -59,7 +61,7 @@ function Channel() {
       }
     }
     // API call to upload a new video for the channel
-    const token = JSON.parse(localStorage.getItem("token"));
+
     setIsLoading(true);
     const bodyObject = {
       channelId,

@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getToken } from "../utils/getLocalStorageValues";
 
 function ChannelList() {
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = getToken();
   const [channelList, setChannelList] = useState([]);
   useEffect(() => {
     // API call to fetch the list of channels for the logged-in user
