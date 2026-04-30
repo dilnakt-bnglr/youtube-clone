@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import axios from "axios";
 import Loading from "../Shared/Loading";
 import { getToken } from "../../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 function EditChannelVideo({
   selectedVideoToEdit,
@@ -54,7 +55,7 @@ function EditChannelVideo({
     };
     axios
       .put(
-        `http://localhost:5000/api/video/${selectedVideoToEdit?._id}`,
+        `${API_BASE_URL}/api/video/${selectedVideoToEdit?._id}`,
         bodyObject,
         {
           headers: {

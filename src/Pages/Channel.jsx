@@ -10,6 +10,7 @@ import axios from "axios";
 import EditChannelVideo from "../Components/Channel/EditChannelVideo";
 import Loading from "../Components/Shared/Loading";
 import { getToken, getUserId } from "../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function Channel() {
   const [showModal, setShowModal] = useState(false);
@@ -27,7 +28,7 @@ function Channel() {
   useEffect(() => {
     // API call to fetch channel details and videos for the given channel ID
     axios
-      .get(`http://localhost:5000/api/channel/${channelId}`)
+      .get(`${API_BASE_URL}/api/channel/${channelId}`)
       .then((response) => {
         setChannelData(response.data.channelDetails);
         setChannelVideos(response.data.videos);
@@ -73,7 +74,7 @@ function Channel() {
     };
     // API call to upload a new video for the channel
     axios
-      .post("http://localhost:5000/api/video", bodyObject, {
+      .post(`${API_BASE_URL}/api/video`, bodyObject, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`,

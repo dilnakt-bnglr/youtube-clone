@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getToken, getUserId } from "../../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 function VideoItem({
   channel,
@@ -20,7 +21,7 @@ function VideoItem({
   // Function to handle deleting a video by making an API call and updating the channel videos state by removing the deleted video
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:5000/api/video/${video?._id}`, {
+      .delete(`${API_BASE_URL}/api/video/${video?._id}`, {
         headers: {
           Authorization: `JWT ${token}`,
         },

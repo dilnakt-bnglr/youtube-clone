@@ -11,6 +11,7 @@ import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
 import { sampleThumnails } from "../utils/sampleThumbnail.js";
 import { getToken, getUserId } from "../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function VideoDetails() {
   const videoId = useParams().id;
@@ -26,7 +27,7 @@ function VideoDetails() {
   useEffect(() => {
     // API call to fetch video details, comments, and user like/dislike status for the given video ID
     axios
-      .get(`http://localhost:5000/api/video/${videoId}`)
+      .get(`${API_BASE_URL}/api/video/${videoId}`)
       .then((response) => {
         setVideoData(response.data);
         setComments(response.data.comments);
@@ -59,7 +60,7 @@ function VideoDetails() {
     }
     const bodyObject = { userId, videoId };
     axios
-      .post("http://localhost:5000/api/user-action/like", bodyObject, {
+      .post(`${API_BASE_URL}/api/user-action/like`, bodyObject, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`,
@@ -83,7 +84,7 @@ function VideoDetails() {
     }
     const bodyObject = { userId, videoId };
     axios
-      .post("http://localhost:5000/api/user-action/dislike", bodyObject, {
+      .post(`${API_BASE_URL}/api/user-action/dislike`, bodyObject, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`,

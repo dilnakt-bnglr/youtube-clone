@@ -4,11 +4,12 @@ import Category from "./Components/Home/Category";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getVideo } from "./Store/videoSlice.js";
+import { API_BASE_URL } from "./utils/apiConfig";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get("http://localhost:5000/api/videos").then((response) => {
+    axios.get(`${API_BASE_URL}/api/videos`).then((response) => {
       dispatch(getVideo(response?.data?.videos));
     });
   }, []);

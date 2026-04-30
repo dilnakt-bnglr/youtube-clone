@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../Store/userSlice.js";
 import Loading from "../Components/Shared/Loading.jsx";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function SignIn() {
   const [user, setUser] = useState("");
@@ -33,7 +34,7 @@ function SignIn() {
     const bodyObject = { user, password };
     setIsLoading(true);
     axios
-      .post("http://localhost:5000/api/login", bodyObject)
+      .post(`${API_BASE_URL}/api/login`, bodyObject)
       .then((response) => {
         setIsLoading(false);
         navigate("/");

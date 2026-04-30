@@ -3,6 +3,7 @@ import { VscAccount } from "react-icons/vsc";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import axios from "axios";
 import { getToken, getUserId } from "../../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../../utils/apiConfig";
 
 function Comment({ videoId, comments, setComments }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -20,7 +21,7 @@ function Comment({ videoId, comments, setComments }) {
       comment,
     };
     axios
-      .post("http://localhost:5000/api/comment", bodyObject, {
+      .post(`${API_BASE_URL}/api/comment`, bodyObject, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`,
@@ -51,7 +52,7 @@ function Comment({ videoId, comments, setComments }) {
   // Function to handle deleting a comment by making an API call and updating the comments state by removing the deleted comment
   const handleDelete = (commentId) => {
     axios
-      .delete(`http://localhost:5000/api/comment/${commentId}`, {
+      .delete(`${API_BASE_URL}/api/comment/${commentId}`, {
         headers: {
           Authorization: `JWT ${token}`,
         },
@@ -74,7 +75,7 @@ function Comment({ videoId, comments, setComments }) {
   const handleUpdateEdit = (commentId) => {
     const bodyObject = { comment: selectedCommentForEdit.comment };
     axios
-      .put(`http://localhost:5000/api/comment/${commentId}`, bodyObject, {
+      .put(`${API_BASE_URL}/api/comment/${commentId}`, bodyObject, {
         headers: {
           Authorization: `JWT ${token}`,
         },

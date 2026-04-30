@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Components/Shared/Loading";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
@@ -33,7 +34,7 @@ function SignUp() {
     const bodyObject = { userName, email, password };
     setIsLoading(true);
     axios
-      .post("http://localhost:5000/api/register", bodyObject)
+      .post(`${API_BASE_URL}/api/register`, bodyObject)
       .then((data) => {
         setIsLoading(false);
         setSuccessMsg("User Registration Successfull");

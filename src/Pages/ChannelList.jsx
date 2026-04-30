@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getToken } from "../utils/getLocalStorageValues";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function ChannelList() {
   const token = getToken();
@@ -9,7 +10,7 @@ function ChannelList() {
   useEffect(() => {
     // API call to fetch the list of channels for the logged-in user
     axios
-      .get("http://localhost:5000/api/channel-list", {
+      .get(`${API_BASE_URL}/api/channel-list`, {
         headers: {
           Authorization: `JWT ${token}`,
         },

@@ -13,6 +13,7 @@ import { signOut } from "../Store/userSlice.js";
 import axios from "axios";
 import { filterVideos } from "../Store/videoSlice.js";
 import { getToken, getUserName } from "../utils/getLocalStorageValues.js";
+import { API_BASE_URL } from "../utils/apiConfig";
 
 function Header() {
   const userData = useSelector((state) => state.user.userName) || getUserName();
@@ -48,7 +49,7 @@ function Header() {
     const bodyObject = { channelName, channelHandleId };
 
     axios
-      .post("http://localhost:5000/api/channel", bodyObject, {
+      .post(`${API_BASE_URL}/api/channel`, bodyObject, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`,
